@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Richard Dixen — Country Music</title>
+  <meta name="description" content="Richard Dixen — Raw, authentic country music from rural Texas. Stream Cowboy Vibe and more on Spotify.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Libre+Baskerville:ital@0;1&family=Oswald:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dirt:    #1a1208;
+      --amber:   #c8882a;
+      --gold:    #e8b84b;
+      --cream:   #f2e8d5;
+      --dust:    #8c7355;
+      --smoke:   #2e2416;
+      --rust:    #8b3a1a;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dirt);
+      color: var(--cream);
+      font-family: 'Libre Baskerville', Georgia, serif;
+      overflow-x: hidden;
+    }
+
+    /* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+      padding: 40px 20px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,136,42,0.15) 0%, transparent 70%),
+        linear-gradient(180deg, #0d0a05 0%, var(--dirt) 50%, #0d0a05 100%);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    }
+
+    .hero-badge {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(64px, 14vw, 140px);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--cream);
+      text-shadow: 0 4px 40px rgba(200,136,42,0.3);
+      opacity: 0;
+      animation: fadeUp 1s ease 0.4s forwards;
+    }
+
+    .hero-name span {
+      display: block;
+      color: var(--amber);
+      font-style: italic;
+      font-size: 0.7em;
+    }
+
+    .hero-tagline {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(13px, 2vw, 17px);
+      font-weight: 300;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--dust);
+      margin-top: 28px;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.6s forwards;
+    }
+
+    .hero-divider {
+      width: 80px;
+      height: 1px;
+      background: var(--amber);
+      margin: 32px auto;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.7s forwards;
+    }
+
+    .hero-quote {
+      font-style: italic;
+      font-size: clamp(14px, 2vw, 18px);
+      color: var(--dust);
+      max-width: 500px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.8s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      margin-top: 48px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 1s ease 1s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: var(--amber);
+      color: var(--dirt);
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(200,136,42,0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: transparent;
+      color: var(--cream);
+      font-family: 'Oswald', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(200,136,42,0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      transform: translateY(-2px);
+    }
+
+    /* ── STORY ── */
+    .story {
+      padding: 100px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) {
+      .story { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .story-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 10px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 20px;
+    }
+
+    .story-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 24px;
+    }
+
+    .story-headline em {
+      font-style: italic;
+      color: var(--amber);
+    }
+
+    .story-text {
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--dust);
+    }
+
+    .story-text p + p { margin-top: 16px; }
+
+    .story-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .stat-item {
+      border-left: 2px solid var(--amber);
+      padding-left: 24px;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--amber);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dust);
+      margin-top: 6px;
+    }
+
+    /* ── MUSIC ── */
+    .music-section {
+      padding: 80px 20px;
+      background: var(--smoke);
+      position: relative;
+    }
+
+    .music-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 10px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 700;
+      color: var(--cream);
+    }
+
+    .songs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .song-card {
+      background: rgba(255,255,255,0.02);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--cream);
+      border: 1px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .song-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 2px;
+      background: var(--amber);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .song-card:hover {
+      background: rgba(200,136,42,0.08);
+      border-color: rgba(200,136,42,0.2);
+    }
+
+    .song-card:hover::before { transform: scaleY(1); }
+
+    .song-number {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      color: var(--dust);
+      min-width: 24px;
+      letter-spacing: 1px;
+    }
+
+    .song-info { flex: 1; }
+
+    .song-name {
+      font-size: 14px;
+      font-weight: bold;
+      color: var(--cream);
+      transition: color 0.3s;
+    }
+
+    .song-card:hover .song-name { color: var(--amber); }
+
+    .song-play {
+      font-size: 18px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      color: var(--amber);
+    }
+
+    .song-card:hover .song-play { opacity: 1; }
+
+    /* ── FEATURED ── */
+    .featured {
+      padding: 100px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .featured-song {
+      display: inline-block;
+      padding: 60px;
+      border: 1px solid rgba(200,136,42,0.3);
+      position: relative;
+      width: 100%;
+    }
+
+    .featured-song::before,
+    .featured-song::after {
+      content: '✦';
+      position: absolute;
+      color: var(--amber);
+      font-size: 20px;
+    }
+
+    .featured-song::before { top: 20px; left: 20px; }
+    .featured-song::after  { bottom: 20px; right: 20px; }
+
+    .featured-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 10px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+    }
+
+    .featured-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 8vw, 80px);
+      font-weight: 900;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .featured-desc {
+      font-size: 15px;
+      color: var(--dust);
+      line-height: 1.8;
+      max-width: 400px;
+      margin: 0 auto 36px;
+    }
+
+    /* ── SOCIAL ── */
+    .social-section {
+      padding: 80px 20px;
+      background: linear-gradient(180deg, var(--dirt), #0d0a05);
+      text-align: center;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border: 1px solid rgba(200,136,42,0.3);
+      color: var(--cream);
+      text-decoration: none;
+      font-family: 'Oswald', sans-serif;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      background: rgba(200,136,42,0.05);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      border-top: 1px solid rgba(200,136,42,0.15);
+    }
+
+    footer p {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dust);
+    }
+
+    /* ── PRIVACY / TERMS (hidden pages) ── */
+    .legal-page {
+      display: none;
+      padding: 80px 20px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .legal-page h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: var(--amber);
+      margin-bottom: 24px;
+    }
+
+    .legal-page p {
+      color: var(--dust);
+      line-height: 1.8;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: linear-gradient(180deg, rgba(10,8,4,0.9), transparent);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Oswald', sans-serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--dust);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--amber); }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      nav { padding: 16px 20px; }
+      .featured-song { padding: 40px 24px; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Richard Dixen</a>
+    <ul class="nav-links">
+      <li><a href="#story">Story</a></li>
+      <li><a href="#music">Music</a></li>
+      <li><a href="#connect">Connect</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">From Rural Texas to Nashville</div>
+    <h1 class="hero-name">
+      Richard
+      <span>Dixen</span>
+    </h1>
+    <p class="hero-tagline">Raw Country Music &nbsp;·&nbsp; Real Stories &nbsp;·&nbsp; No Filter</p>
+    <div class="hero-divider"></div>
+    <p class="hero-quote">"Wrote my best songs on my worst nights. Maybe that's what country music is supposed to be."</p>
+    <div class="hero-cta">
+      <a href="https://open.spotify.com/artist/2sWGbDB4R25wtrH7kipX65" target="_blank" class="btn-primary">
+        ▶ Stream on Spotify
+      </a>
+      <a href="#story" class="btn-secondary">
+        The Story
+      </a>
+    </div>
+  </section>
+
+  <!-- STORY -->
+  <section class="story" id="story">
+    <div class="reveal">
+      <div class="story-label">The Story</div>
+      <h2 class="story-headline">From <em>Dust</em> to Nashville</h2>
+      <div class="story-text">
+        <p>Hailing from the sun-baked backroads of rural Texas, Richard Dixen carried the grit and honest ache of the American heartland in every note he ever sang — but kept those songs locked in a dusty notebook for fifteen years.</p>
+        <p>When his marriage ended and his world came apart, Richard packed one worn suitcase and drove straight to Nashville. The songs that had been too raw to share became an album. The heartbreak became music.</p>
+        <p>Richard Dixen is the sound of a man who lost everything, only to find his voice.</p>
+      </div>
+    </div>
+    <div class="story-stat reveal">
+      <div class="stat-item">
+        <div class="stat-number">15</div>
+        <div class="stat-label">Years of songs waiting to be heard</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">1</div>
+        <div class="stat-label">Suitcase. One drive to Nashville.</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">23+</div>
+        <div class="stat-label">Songs on all streaming platforms</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED SONG -->
+  <section class="featured" id="featured">
+    <div class="reveal">
+      <div class="section-label">Featured Track</div>
+      <div class="featured-song">
+        <div class="featured-label">Start Here</div>
+        <div class="featured-title">Cowboy Vibe</div>
+        <p class="featured-desc">The song that started it all. Written on the worst night of his life. The one people can't stop playing.</p>
+        <a href="https://open.spotify.com/track/71rVwoO67M13IOBfT7LrnX" target="_blank" class="btn-primary">
+          ▶ Listen Now
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MUSIC -->
+  <section class="music-section" id="music">
+    <div class="section-header reveal">
+      <div class="section-label">Discography</div>
+      <h2 class="section-title">All Songs</h2>
+    </div>
+    <div class="songs-grid reveal">
+      <a href="https://open.spotify.com/track/71rVwoO67M13IOBfT7LrnX" target="_blank" class="song-card"><span class="song-number">01</span><div class="song-info"><div class="song-name">Cowboy Vibe</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/0qzMMrmBJZZUQrCYhArI3m" target="_blank" class="song-card"><span class="song-number">02</span><div class="song-info"><div class="song-name">Red White and 4 Wheel High</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/6a5LxQpFstBEa1vySH58tK" target="_blank" class="song-card"><span class="song-number">03</span><div class="song-info"><div class="song-name">Ice In My Whiskey</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/0hsnRk0TyhKgVgx1v9Mb6S" target="_blank" class="song-card"><span class="song-number">04</span><div class="song-info"><div class="song-name">Built Right Here</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/3mWVmgNmPUjBRoDerKRXEc" target="_blank" class="song-card"><span class="song-number">05</span><div class="song-info"><div class="song-name">The Only Boots</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/3rKo8I7RLu2vXWwn12V0l3" target="_blank" class="song-card"><span class="song-number">06</span><div class="song-info"><div class="song-name">Shotgun Rider</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/4hcdaJpgitZJaOQ925Cj11" target="_blank" class="song-card"><span class="song-number">07</span><div class="song-info"><div class="song-name">Mud Slingin Money Making</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/5wgyIsDUbTs4AQFsxTkGXd" target="_blank" class="song-card"><span class="song-number">08</span><div class="song-info"><div class="song-name">6 Shooter Sunset</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/7cDbN4EvNzPe3wbllBa2zJ" target="_blank" class="song-card"><span class="song-number">09</span><div class="song-info"><div class="song-name">Cowboy Fighter</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/0niHY1vtGLXF932Wzxugyx" target="_blank" class="song-card"><span class="song-number">10</span><div class="song-info"><div class="song-name">Skirts and Scars</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/2GXCvURzEjsEogXCyyhVQh" target="_blank" class="song-card"><span class="song-number">11</span><div class="song-info"><div class="song-name">Moonshine Mic Drop</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/2EcQlS0zayQoWELLDjgkhB" target="_blank" class="song-card"><span class="song-number">12</span><div class="song-info"><div class="song-name">Last Laugh</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/1HKmZwCF7jmAlR8gEkNtOc" target="_blank" class="song-card"><span class="song-number">13</span><div class="song-info"><div class="song-name">Honky Tonk Hype</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/06aCJUbJtcp4pIrMMgv8lz" target="_blank" class="song-card"><span class="song-number">14</span><div class="song-info"><div class="song-name">Get Em Out</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/5Pnr4B3VkJoY7VsfWJ43ah" target="_blank" class="song-card"><span class="song-number">15</span><div class="song-info"><div class="song-name">Don't Judge Me</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/4OKt0wJJIary22SUrCLsyF" target="_blank" class="song-card"><span class="song-number">16</span><div class="song-info"><div class="song-name">Don't Mind If I Do</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/5OEXMI9WbI4Nbh3qKAE9am" target="_blank" class="song-card"><span class="song-number">17</span><div class="song-info"><div class="song-name">I'm Coming To Kick Your Ass</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/4pTUptv8MBerD0llkeTV0X" target="_blank" class="song-card"><span class="song-number">18</span><div class="song-info"><div class="song-name">More Country Than You</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/0XwMH3yCnOmgmZSRk7zJUW" target="_blank" class="song-card"><span class="song-number">19</span><div class="song-info"><div class="song-name">Whiskey Girl</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/7DLInk3TKiyeB3ETWTmmNX" target="_blank" class="song-card"><span class="song-number">20</span><div class="song-info"><div class="song-name">Red White & 4 Wheel High ft. Loud Leon</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/6tMlNtoE0NTbQWySa2rc60" target="_blank" class="song-card"><span class="song-number">21</span><div class="song-info"><div class="song-name">Thongs Are Out</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/5M5LuzvGKALwK8JRVvmqN7" target="_blank" class="song-card"><span class="song-number">22</span><div class="song-info"><div class="song-name">The Last USA</div></div><span class="song-play">▶</span></a>
+      <a href="https://open.spotify.com/track/07BQVBKmkeg1w0frfBzkqK" target="_blank" class="song-card"><span class="song-number">23</span><div class="song-info"><div class="song-name">That's My Name</div></div><span class="song-play">▶</span></a>
+    </div>
+  </section>
+
+  <!-- CONNECT -->
+  <section class="social-section" id="connect">
+    <div class="section-header reveal">
+      <div class="section-label">Follow Along</div>
+      <h2 class="section-title">Stay Connected</h2>
+    </div>
+    <div class="social-links reveal">
+      <a href="https://open.spotify.com/artist/2sWGbDB4R25wtrH7kipX65" target="_blank" class="social-link">
+        ♪ Spotify
+      </a>
+      <a href="https://www.facebook.com/richarddixen" target="_blank" class="social-link">
+        f Facebook
+      </a>
+      <a href="https://www.instagram.com/richarddixen1989/" target="_blank" class="social-link">
+        ◎ Instagram
+      </a>
+      <a href="https://twitter.com/RichardDixen89" target="_blank" class="social-link">
+        𝕏 Twitter
+      </a>
+      <a href="https://www.tiktok.com/@richarddixen" target="_blank" class="social-link">
+        ♬ TikTok
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 Richard Dixen Music &nbsp;·&nbsp; All Rights Reserved</p>
+    <p style="margin-top:8px">
+      <a href="/terms.html" style="color:var(--dust);text-decoration:none;margin:0 12px">Terms</a>
+      <a href="/privacy.html" style="color:var(--dust);text-decoration:none;margin:0 12px">Privacy</a>
+    </p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(r => observer.observe(r));
+  </script>
+
+</body>
+</html>
